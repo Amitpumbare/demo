@@ -1,0 +1,39 @@
+
+
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+  <h2>Login</h2>
+
+  <!-- Email -->
+  <label>Email:</label>
+  <input type="text" formControlName="email">
+
+  <span class="error"
+        *ngIf="email?.invalid && (email?.touched || email?.dirty)">
+    Enter a valid email
+  </span>
+
+  <br><br>
+
+  <!-- Password -->
+  <label>Password:</label>
+  <input type="password" formControlName="password">
+
+  <span class="error"
+        *ngIf="password?.invalid && (password?.touched || password?.dirty)">
+    Password must be 8+ chars, include uppercase, lowercase, number and symbol
+  </span>
+
+  <br><br>
+
+  <!-- Remember -->
+  <label>
+    <input type="checkbox" formControlName="rememberMe">
+    Remember my email
+  </label>
+
+  <br><br>
+
+  <button type="submit">Login</button>
+
+</form>

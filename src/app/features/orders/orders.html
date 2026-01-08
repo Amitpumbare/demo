@@ -1,0 +1,31 @@
+<h2>Open Orders</h2>
+
+<!-- Loading state -->
+<div *ngIf="loading">
+  Loading orders...
+</div>
+
+<!-- Empty state -->
+<div *ngIf="!loading && openOrders.length === 0" class="empty">
+  No open orders
+</div>
+
+<!-- Orders list -->
+<div *ngIf="!loading" class="orders-grid">
+  <div class="order-card" *ngFor="let item of openOrders">
+    <div class="order-header">
+      <span class="type"
+            [class.buy]="item.type === 'BUY'"
+            [class.sell]="item.type === 'SELL'">
+        {{ item.type }}
+      </span>
+
+      <span class="status">{{ item.status }}</span>
+    </div>
+
+    <div class="order-body">
+      <p><strong>Price:</strong> {{ item.price }}</p>
+      <p><strong>Quantity:</strong> {{ item.quantity }}</p>
+    </div>
+  </div>
+</div>

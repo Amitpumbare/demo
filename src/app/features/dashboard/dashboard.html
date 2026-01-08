@@ -1,0 +1,19 @@
+<div class="dashboard">
+  <div class="header">
+    <div>
+      <p class="welcome-text">Welcome back,</p>
+      <h3 class="user-name">{{ user?.fullName }}</h3>
+    </div>
+
+    <button class="logout-btn" (click)="onLogout()">Logout</button>
+  </div>
+
+  <div class="nav">
+    <button routerLink="orders">Orders</button>
+    <button routerLink="trades">Trades</button>
+  </div>
+
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+</div>
