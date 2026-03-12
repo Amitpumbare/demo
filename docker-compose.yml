@@ -1,26 +1,37 @@
-version: '3.8'
-
 services:
 
   postgres:
     image: postgres:16
     container_name: trading-postgres
+    restart: unless-stopped
     environment:
       POSTGRES_DB: trading_engine
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: post1234
     ports:
       - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          memory: 512m
 
   redis:
     image: redis:7
     container_name: trading-redis
+    restart: unless-stopped
     ports:
       - "6379:6379"
+    deploy:
+      resources:
+        limits:
+          memory: 256m
 
   backend:
     build: .
     container_name: trading-backend
+    restart: unless-stopped
     ports:
       - "8081:8081"
     depends_on:
@@ -32,3 +43,10 @@ services:
       SPRING_DATASOURCE_PASSWORD: post1234
       SPRING_REDIS_HOST: redis
       SPRING_REDIS_PORT: 6379
+    deploy:
+      resources:
+        limits:
+          memory: 768m
+
+volumes:
+  postgres_data:
