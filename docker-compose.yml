@@ -12,10 +12,6 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    deploy:
-      resources:
-        limits:
-          memory: 512m
 
   redis:
     image: redis:7
@@ -23,10 +19,6 @@ services:
     restart: unless-stopped
     ports:
       - "6379:6379"
-    deploy:
-      resources:
-        limits:
-          memory: 256m
 
   backend:
     build: .
@@ -43,10 +35,14 @@ services:
       SPRING_DATASOURCE_PASSWORD: post1234
       SPRING_REDIS_HOST: redis
       SPRING_REDIS_PORT: 6379
-    deploy:
-      resources:
-        limits:
-          memory: 768m
+
+  frontend:
+    build: ./trading-ui
+    container_name: trading-frontend
+    ports:
+      - "4200:4200"
+    depends_on:
+      - backend
 
 volumes:
   postgres_data:
