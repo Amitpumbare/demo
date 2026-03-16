@@ -30,6 +30,8 @@ services:
     image: amitumbare/trading-backend
     container_name: trading-backend
     restart: unless-stopped
+    ports:
+      - "8081:8081"
     depends_on:
       - postgres
       - redis
