@@ -1,3 +1,5 @@
+version: "3.8"
+
 services:
 
   postgres:
@@ -10,18 +12,24 @@ services:
       POSTGRES_PASSWORD: post1234
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   redis:
     image: redis:7
     container_name: trading-redis
     restart: unless-stopped
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   backend:
     image: amitumbare/trading-backend
     container_name: trading-backend
     restart: unless-stopped
-    ports:
-      - "8081:8081"
     depends_on:
       - postgres
       - redis
@@ -31,14 +39,23 @@ services:
       SPRING_DATASOURCE_PASSWORD: post1234
       SPRING_REDIS_HOST: redis
       SPRING_REDIS_PORT: 6379
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   frontend:
     image: amitumbare/trading-frontend
     container_name: trading-frontend
+    restart: unless-stopped
     ports:
       - "4200:80"
     depends_on:
       - backend
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
 
 volumes:
   postgres_data:
